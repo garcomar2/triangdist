@@ -108,13 +108,13 @@ ptriang <- function(q, min, max, mode) {
 
   probability[right & mode != max] <- 1 -
     ((max[right & mode != max] - q[right & mode != max])^2) /
-    ((max[right & mode != max] - min[right & mode != max]) *
+      ((max[right & mode != max] - min[right & mode != max]) *
        (max[right & mode != max] - mode[right & mode != max]))
 
   # Caso especial: mode coincide con min
   probability[right & mode == min] <- 1 -
     ((max[right & mode == min] - q[right & mode == min])^2) /
-    (max[right & mode == min] - min[right & mode == min])^2
+      (max[right & mode == min] - min[right & mode == min])^2
 
   # Caso especial: mode coincide con max
   probability[left & mode == max] <- ((q[left & mode == max] -
@@ -183,6 +183,7 @@ qtriang <- function(p, min, max, mode) {
 #' @param mode Numeric vector of modes.
 #'
 #' @return A numeric vector of random values.
+#' @importFrom stats runif
 #' @export
 #'
 #' @examples
