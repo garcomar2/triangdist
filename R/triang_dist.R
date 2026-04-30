@@ -40,10 +40,7 @@ dtriang <- function(x, min, max, mode) {
 
   density <- numeric(length(x))
 
-  # Parte creciente de la densidad
   left <- x >= min & x <= mode
-
-  # Parte decreciente de la densidad
   right <- x > mode & x <= max
 
   density[left & mode != min] <- 2 * (x[left & mode != min] -
@@ -56,11 +53,9 @@ dtriang <- function(x, min, max, mode) {
     ((max[right & mode != max] - min[right & mode != max]) *
        (max[right & mode != max] - mode[right & mode != max]))
 
-  # Caso especial: mode coincide con min
   density[x == min & mode == min] <- 2 / (max[x == min & mode == min] -
                                             min[x == min & mode == min])
 
-  # Caso especial: mode coincide con max
   density[x == max & mode == max] <- 2 / (max[x == max & mode == max] -
                                             min[x == max & mode == max])
 
@@ -95,10 +90,7 @@ ptriang <- function(q, min, max, mode) {
 
   probability[q >= max] <- 1
 
-  # Parte izquierda de la función de distribución
   left <- q > min & q <= mode
-
-  # Parte derecha de la función de distribución
   right <- q > mode & q < max
 
   probability[left & mode != min] <- ((q[left & mode != min] -
@@ -108,15 +100,13 @@ ptriang <- function(q, min, max, mode) {
 
   probability[right & mode != max] <- 1 -
     ((max[right & mode != max] - q[right & mode != max])^2) /
-      ((max[right & mode != max] - min[right & mode != max]) *
+    ((max[right & mode != max] - min[right & mode != max]) *
        (max[right & mode != max] - mode[right & mode != max]))
 
-  # Caso especial: mode coincide con min
   probability[right & mode == min] <- 1 -
     ((max[right & mode == min] - q[right & mode == min])^2) /
-      (max[right & mode == min] - min[right & mode == min])^2
+    (max[right & mode == min] - min[right & mode == min])^2
 
-  # Caso especial: mode coincide con max
   probability[left & mode == max] <- ((q[left & mode == max] -
                                          min[left & mode == max])^2) /
     (max[left & mode == max] - min[left & mode == max])^2
@@ -156,10 +146,7 @@ qtriang <- function(p, min, max, mode) {
 
   quantile <- numeric(length(p))
 
-  # Rama izquierda de la inversa de la CDF
   left <- p <= fc
-
-  # Rama derecha de la inversa de la CDF
   right <- p > fc
 
   quantile[left] <- min[left] +

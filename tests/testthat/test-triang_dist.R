@@ -68,3 +68,14 @@ test_that("functions are vectorized", {
   expect_length(probability, 3)
   expect_length(quantile, 3)
 })
+
+test_that("special cases with mode equal to min or max work", {
+  expect_equal(dtriang(0, min = 0, max = 1, mode = 0), 2)
+  expect_equal(dtriang(1, min = 0, max = 1, mode = 1), 2)
+
+  expect_equal(ptriang(0.5, min = 0, max = 1, mode = 0), 0.75)
+  expect_equal(ptriang(0.5, min = 0, max = 1, mode = 1), 0.25)
+
+  expect_equal(qtriang(0, min = 0, max = 1, mode = 0), 0)
+  expect_equal(qtriang(1, min = 0, max = 1, mode = 1), 1)
+})
