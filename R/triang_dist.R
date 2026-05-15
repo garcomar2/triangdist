@@ -29,7 +29,12 @@ recycle_args <- function(...) {
 #' @examples
 #' dtriang(0.5, min = 0, max = 1, mode = 0.5)
 dtriang <- function(x, min, max, mode) {
-  args <- recycle_args(x = x, min = min, max = max, mode = mode)
+  args <- recycle_args(
+    x = x,
+    min = min,
+    max = max,
+    mode = mode
+  )
 
   x <- args$x
   min <- args$min
@@ -53,11 +58,15 @@ dtriang <- function(x, min, max, mode) {
     ((max[right & mode != max] - min[right & mode != max]) *
        (max[right & mode != max] - mode[right & mode != max]))
 
-  density[x == min & mode == min] <- 2 / (max[x == min & mode == min] -
-                                            min[x == min & mode == min])
+  density[x == min &
+            mode == min] <- 2 / (max[x == min & mode == min] -
+                                   min[x == min &
+                                         mode == min])
 
-  density[x == max & mode == max] <- 2 / (max[x == max & mode == max] -
-                                            min[x == max & mode == max])
+  density[x == max &
+            mode == max] <- 2 / (max[x == max & mode == max] -
+                                   min[x == max &
+                                         mode == max])
 
   density
 }
@@ -77,7 +86,12 @@ dtriang <- function(x, min, max, mode) {
 #' @examples
 #' ptriang(0.5, min = 0, max = 1, mode = 0.5)
 ptriang <- function(q, min, max, mode) {
-  args <- recycle_args(q = q, min = min, max = max, mode = mode)
+  args <- recycle_args(
+    q = q,
+    min = min,
+    max = max,
+    mode = mode
+  )
 
   q <- args$q
   min <- args$min
@@ -94,21 +108,23 @@ ptriang <- function(q, min, max, mode) {
   right <- q > mode & q < max
 
   probability[left & mode != min] <- ((q[left & mode != min] -
-                                         min[left & mode != min])^2) /
+                                         min[left &
+                                               mode != min])^2) /
     ((max[left & mode != min] - min[left & mode != min]) *
        (mode[left & mode != min] - min[left & mode != min]))
 
   probability[right & mode != max] <- 1 -
     ((max[right & mode != max] - q[right & mode != max])^2) /
-    ((max[right & mode != max] - min[right & mode != max]) *
-       (max[right & mode != max] - mode[right & mode != max]))
+      ((max[right & mode != max] - min[right & mode != max]) *
+         (max[right & mode != max] - mode[right & mode != max]))
 
   probability[right & mode == min] <- 1 -
     ((max[right & mode == min] - q[right & mode == min])^2) /
-    (max[right & mode == min] - min[right & mode == min])^2
+      (max[right & mode == min] - min[right & mode == min])^2
 
   probability[left & mode == max] <- ((q[left & mode == max] -
-                                         min[left & mode == max])^2) /
+                                         min[left &
+                                               mode == max])^2) /
     (max[left & mode == max] - min[left & mode == max])^2
 
   probability
@@ -129,7 +145,12 @@ ptriang <- function(q, min, max, mode) {
 #' @examples
 #' qtriang(0.5, min = 0, max = 1, mode = 0.5)
 qtriang <- function(p, min, max, mode) {
-  args <- recycle_args(p = p, min = min, max = max, mode = mode)
+  args <- recycle_args(
+    p = p,
+    min = min,
+    max = max,
+    mode = mode
+  )
 
   p <- args$p
   min <- args$min
@@ -176,5 +197,8 @@ qtriang <- function(p, min, max, mode) {
 #' @examples
 #' rtriang(5, min = 0, max = 1, mode = 0.5)
 rtriang <- function(n, min, max, mode) {
-  qtriang(runif(n), min = min, max = max, mode = mode)
+  qtriang(runif(n),
+          min = min,
+          max = max,
+          mode = mode)
 }
